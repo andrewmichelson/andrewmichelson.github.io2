@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <article class="talk-detail">
+        <header class="mb-4">
+          <h1 class="h2 text-primary">{{ page.title }}</h1>
+          <p class="text-muted">
+            <i class="fas fa-calendar me-2"></i>{{ page.date | date: "%B %d, %Y" }}<br>
+            {% if page.event %}<i class="fas fa-map-marker-alt me-2"></i>{{ page.event }}{% endif %}
+            {% if page.location %} | {{ page.location }}{% endif %}
+          </p>
+          <div class="talk-meta mb-3">
+            {% if page.slides_url %}
+              <a href="{{ page.slides_url }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">
+                <i class="fas fa-presentation me-1"></i>Slides
+              </a>
+            {% endif %}
+            {% if page.video_url %}
+              <a href="{{ page.video_url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+                <i class="fas fa-video me-1"></i>Video
+              </a>
+            {% endif %}
+          </div>
+        </header>
+
+        <div class="content">
+          {{ content }}
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

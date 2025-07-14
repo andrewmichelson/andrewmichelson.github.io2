@@ -1,0 +1,85 @@
+# Site settings
+title: "Dr. Andrew Michelson - Pulmonary Medicine & Critical Care"
+description: "Professional website for Dr. Andrew Michelson, Assistant Professor, Director of Critical Care Informatics Research"
+url: "https://andrewmichelson.github.io"
+baseurl: ""
+email: andrew.michelson@university.edu
+author: "Dr. Andrew Michelson"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+timezone: America/New_York
+
+# Collections for dynamic content
+collections:
+  publications:
+    output: true
+    permalink: /publications/:name/
+    sort_by: date
+  highlights:
+    output: true
+    permalink: /highlights/:name/
+    sort_by: date
+  talks:
+    output: true
+    permalink: /talks/:name/
+    sort_by: date
+  awards:
+    output: true
+    permalink: /awards/:name/
+    sort_by: date
+
+# Defaults for collections
+defaults:
+  - scope:
+      path: ""
+      type: "publications"
+    values:
+      layout: "publication"
+      author: "Dr. Andrew Michelson"
+  - scope:
+      path: ""
+      type: "highlights"
+    values:
+      layout: "highlight"
+  - scope:
+      path: ""
+      type: "talks"
+    values:
+      layout: "talk"
+  - scope:
+      path: ""
+      type: "awards"
+    values:
+      layout: "award"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+twitter:
+  username: DrMichelson
+  card: summary_large_image
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - LICENSE
+  - .gitignore
+
+# Sass settings
+sass:
+  sass_dir: _sass
+  style: compressed

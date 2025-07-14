@@ -1,0 +1,48 @@
+---
+layout: default
+---
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <article class="publication-detail">
+        <header class="mb-4">
+          <h1 class="h2 text-primary">{{ page.title }}</h1>
+          <p class="text-muted">
+            <strong>{{ page.authors }}</strong><br>
+            <em>{{ page.journal }}</em>, {{ page.year }}
+            {% if page.volume %} | Vol. {{ page.volume }}{% endif %}
+            {% if page.pages %} | pp. {{ page.pages }}{% endif %}
+          </p>
+          <div class="publication-meta mb-3">
+            {% if page.doi %}
+              <a href="https://doi.org/{{ page.doi }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">
+                <i class="fas fa-external-link-alt me-1"></i>DOI
+              </a>
+            {% endif %}
+            {% if page.pubmed_id %}
+              <a href="https://pubmed.ncbi.nlm.nih.gov/{{ page.pubmed_id }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">
+                <i class="fas fa-book-medical me-1"></i>PubMed
+              </a>
+            {% endif %}
+            {% if page.pdf_url %}
+              <a href="{{ page.pdf_url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+                <i class="fas fa-file-pdf me-1"></i>PDF
+              </a>
+            {% endif %}
+          </div>
+        </header>
+
+        <div class="content">
+          {{ content }}
+        </div>
+
+        {% if page.abstract %}
+        <section class="mt-4">
+          <h3>Abstract</h3>
+          <p class="text-justify">{{ page.abstract }}</p>
+        </section>
+        {% endif %}
+      </article>
+    </div>
+  </div>
+</div>

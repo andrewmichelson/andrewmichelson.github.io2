@@ -1,0 +1,99 @@
+<!-- Dynamic content display with filtering and pagination -->
+<div class="content-management-section">
+  <!-- Filter Tabs -->
+  <ul class="nav nav-pills justify-content-center mb-4" id="content-filter">
+    <li class="nav-item">
+      <a class="nav-link active" data-filter="all" href="#all">All Updates</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-filter="publications" href="#publications">Publications</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-filter="highlights" href="#highlights">Highlights</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-filter="talks" href="#talks">Talks</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-filter="awards" href="#awards">Awards</a>
+    </li>
+  </ul>
+
+  <!-- Content Container -->
+  <div id="content-container">
+    {% comment %} Combine all collections and sort by date {% endcomment %}
+    {% assign all_content = site.publications | concat: site.highlights | concat: site.talks | concat: site.awards | sort: 'date' | reverse %}
+
+    {% for item in all_content limit: 5 %}
+      {% assign collection_name = item.collection %}
+      <div class="content-item mb-4 p-4 border rounded shadow-sm" data-category="{{ collection_name }}" data-date="{{ item.date | date: '%Y-%m-%d' }}">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h5 class="mb-0">
+            <a href="{{ item.url | relative_url }}" class="text-decoration-none">{{ item.title }}</a>
+          </h5>
+          <span class="badge bg-{{ collection_name }}">{{ collection_name | capitalize }}</span>
+        </div>
+
+        <p class="text-muted mb-2">
+          <i class="fas fa-calendar me-2"></i>{{ item.date | date: "%B %d, %Y" }}
+          {% if item.journal %} | <em>{{ item.journal }}</em>{% endif %}
+          {% if item.event %} | {{ item.event }}{% endif %}
+          {% if item.organization %} | {{ item.organization }}{% endif %}
+        </p>
+
+        <p class="mb-2">{{ item.excerpt | strip_html | truncatewords: 30 }}</p>
+
+        <div class="d-flex gap-2">
+          <a href="{{ item.url | relative_url }}" class="btn btn-sm btn-outline-primary">Read More</a>
+          {% if item.external_url %}
+            <a href="{{ item.external_url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+              <i class="fas fa-external-link-alt me-1"></i>External Link
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Load More Button -->
+  {% if all_content.size > 5 %}
+  <div class="text-center mt-4">
+    <button id="load-more-btn" class="btn btn-primary" data-loaded="5" data-total="{{ all_content.size }}">
+      Load More <span class="badge bg-light text-dark ms-2">{{ all_content.size | minus: 5 }} remaining</span>
+    </button>
+  </div>
+
+  <!-- Hidden content for pagination -->
+  <div id="hidden-content" style="display: none;">
+    {% for item in all_content offset: 5 %}
+      {% assign collection_name = item.collection %}
+      <div class="content-item mb-4 p-4 border rounded shadow-sm" data-category="{{ collection_name }}" data-date="{{ item.date | date: '%Y-%m-%d' }}">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h5 class="mb-0">
+            <a href="{{ item.url | relative_url }}" class="text-decoration-none">{{ item.title }}</a>
+          </h5>
+          <span class="badge bg-{{ collection_name }}">{{ collection_name | capitalize }}</span>
+        </div>
+
+        <p class="text-muted mb-2">
+          <i class="fas fa-calendar me-2"></i>{{ item.date | date: "%B %d, %Y" }}
+          {% if item.journal %} | <em>{{ item.journal }}</em>{% endif %}
+          {% if item.event %} | {{ item.event }}{% endif %}
+          {% if item.organization %} | {{ item.organization }}{% endif %}
+        </p>
+
+        <p class="mb-2">{{ item.excerpt | strip_html | truncatewords: 30 }}</p>
+
+        <div class="d-flex gap-2">
+          <a href="{{ item.url | relative_url }}" class="btn btn-sm btn-outline-primary">Read More</a>
+          {% if item.external_url %}
+            <a href="{{ item.external_url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+              <i class="fas fa-external-link-alt me-1"></i>External Link
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
